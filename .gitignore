@@ -1,0 +1,11 @@
+.env
+.env.*.local
+vendor/
+node_modules/
+db_data/
+*.log
+.DS_Store
+.vscode/
+.idea/
+deploy/letsencrypt/
+RELEASE_*.md
