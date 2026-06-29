@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    env_file: .env
+    volumes:
+      - ./public:/var/www/html/public:ro
+      - ./src:/var/www/html/src:ro
+    depends_on:
+      - db
+    restart: unless-stopped
+  db:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_placeholder
+      MYSQL_DATABASE: verifytools
+      MYSQL_USER: verifytools_user
+      MYSQL_PASSWORD: ChangeMePLACEHOLDER
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+  nginx:
+    image: nginx:1.24-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./deploy/letsencrypt:/etc/letsencrypt
+      - ./public:/var/www/html/public:ro
+    depends_on:
+      - app
+volumes:
+  db_data:
