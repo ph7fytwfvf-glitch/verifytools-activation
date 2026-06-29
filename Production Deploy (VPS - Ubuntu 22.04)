@@ -1,0 +1,8 @@
+sudo bash deploy/setup-server.sh
+git clone https://github.com/Verifytools/verifytools-activation.git /opt/verifytools
+cd /opt/verifytools
+cp .env.production.example .env
+# Edit .env with your secrets
+bash deploy/deploy.sh
+sudo certbot --nginx -d doings.verifytools --email admin@doings.verifytools --agree-tos --non-interactive
+docker compose -f docker-compose.prod.yml exec -T app php tools/create_admin.php admin admin@example.com "ChangeMeAdmin!2026"
