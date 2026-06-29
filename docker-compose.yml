@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - APP_ENV=development
+  db:
+    image: mariadb:10.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_placeholder
+      MYSQL_DATABASE: verifytools
+      MYSQL_USER: verifytools_user
+      MYSQL_PASSWORD: ChangeMePLACEHOLDER
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:
