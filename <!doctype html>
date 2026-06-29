@@ -1,0 +1,19 @@
+<?php if ($errors): ?>
+  <?php foreach ($errors as $err): ?>
+    <div class="alert error"><?=htmlspecialchars($err)?></div>
+  <?php endforeach; ?>
+<?php endif; ?>
+
+<form method="post" action="/active.php" id="activation-form">
+  <input type="hidden" name="csrf" value="<?=htmlspecialchars($_SESSION['csrf'])?>"/>
+  <label for="license_key">License Key</label>
+  <input id="license_key" name="license_key" required placeholder="XXXX-XXXX-XXXX" value="<?=isset($_POST['license_key'])?htmlspecialchars($_POST['license_key']):''?>"/>
+
+  <label for="email">Email (optional)</label>
+  <input id="email" name="email" type="email" placeholder="you@example.com" value="<?=isset($_POST['email'])?htmlspecialchars($_POST['email']):''?>"/>
+
+  <label for="machine_id">Machine ID (optional)</label>
+  <input id="machine_id" name="machine_id" placeholder="e.g. MAC or HWID"/>
+
+  <button type="submit" id="activate-btn">Activate</button>
+</form>
